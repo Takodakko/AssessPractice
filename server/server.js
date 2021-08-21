@@ -12,6 +12,6 @@ app.listen(PORT, () => {
   console.log(`Server listening on port: ${PORT}...`);
 });
 
-app.use('/', routes);
+app.use('/api', routes);
 
 module.exports = app;
