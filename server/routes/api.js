@@ -12,11 +12,14 @@ router.post('/',
   (req, res) => res.status(200).json(res.locals.uncles)
 );
 
-router.put
+router.put('/:id',
+  unclesController.editUncle,
+  (req, res) => res.status(200).json(res.locals.uncle)
+)
 
 router.delete('/:id',
   unclesController.deleteUncle,
-  (req, res) => res.status(200).json(res.locals.uncles)
+  (req, res) => res.status(200).json(res.locals.deleted)
 );
 
 module.exports = router;

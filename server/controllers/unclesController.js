@@ -37,12 +37,28 @@ unclesController.postUncle = (req, res, next) => {
   }));
 };
 
+unclesController.editUncle = (req, res, next) => {
+  const id = req.params.id
+  const { name, age, intro } = req.body;
+  const inputs = [name, age, intro, id];
+  const queryStr = 'UPDATE uncles SET name = $1, age = $2, intro = $3 WHERE _id = $4 RETURNING *;';
+  db.query(queryStr, inputs)
+  .then(result => {
+    res.locals.uncle = result.rows[0];
+    return next();
+  })
+  .catch((err) => next({
+    log: 'Error',
+    message: { err: 'Error: unclesController.editUncle' }
+  }))
+}
+
 unclesController.deleteUncle = (req, res, next) => {
   const id = [req.params.id];
-  const queryStr = 'DELETE FROM uncles WHERE _id = $1;'
+  const queryStr = 'DELETE FROM uncles WHERE _id = $1 RETURNING *;'
   db.query(queryStr, id)
   .then(result => {
-    // console.log(result, 'result')
+    res.locals.deleted = result.rows[0];
     return next()
   })
   .catch((err) => next({
