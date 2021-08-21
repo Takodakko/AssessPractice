@@ -59,36 +59,40 @@ document.addEventListener('DOMContentLoaded', () => {
     .catch((err) => {
         console.log(err, "error")
     })
+
+
+    document.getElementById('post').addEventListener('click', () => {
+      let name = document.getElementById('name').value
+      const age = document.getElementById('age').value
+      const intro = document.getElementById('intro').value
+      fetch('/api', {
+          method: 'POST',
+          headers: {
+                'Content-Type': 'Application/JSON'
+              },
+          body: JSON.stringify({name: name, age: age, intro: intro})
+  
+      })
+      .then((data) => data.json())
+      .then((data) => {
+          document.getElementById('name').innerHTML = '';
+          console.log("success")})
+      .catch((err) => {
+          console.log(err, "error")
+      })
+  })
+  
+  const deleteBtn = document.getElementsByClassName('delete')
+  deleteBtn.addEventListener('click', (e) => {
+    
+  const id = e.target.id;
+    fetch(`/api/${id}`, {
+      method: 'DELETE',
+      headers: {
+            'Content-Type': 'Application/JSON'
+          }
+  })
+  
+  })
 })
 
-document.getElementById('post').addEventListener('click', () => {
-    let name = document.getElementById('name').value
-    const age = document.getElementById('age').value
-    const intro = document.getElementById('intro').value
-    fetch('/api', {
-        method: 'POST',
-        headers: {
-              'Content-Type': 'Application/JSON'
-            },
-        body: JSON.stringify({name: name, age: age, intro: intro})
-
-    })
-    .then((data) => data.json())
-    .then((data) => {
-        document.getElementById('name').innerHTML = '';
-        console.log("success")})
-    .catch((err) => {
-        console.log(err, "error")
-    })
-})
-
-document.addEventListener('click', (e) => {
-const id = e.target.id;
-  fetch(`/api/${id}`, {
-    method: 'DELETE',
-    headers: {
-          'Content-Type': 'Application/JSON'
-        }
-})
-
-})

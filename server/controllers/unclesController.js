@@ -37,4 +37,18 @@ unclesController.postUncle = (req, res, next) => {
   }));
 };
 
+unclesController.deleteUncle = (req, res, next) => {
+  const id = [req.params.id];
+  const queryStr = 'DELETE FROM uncles WHERE _id = $1;'
+  db.query(queryStr, id)
+  .then(result => {
+    // console.log(result, 'result')
+    return next()
+  })
+  .catch((err) => next({
+    log: 'Error',
+    message: { err: 'O to to, unclesController.deleteUncle'}
+  }));
+}
+
 module.exports = unclesController;

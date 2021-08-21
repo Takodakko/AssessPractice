@@ -14,6 +14,9 @@ router.post('/',
 
 router.put
 
-router.delete
+router.delete('/:id',
+  unclesController.deleteUncle,
+  (req, res) => res.status(200).json(res.locals.uncles)
+);
 
 module.exports = router;
